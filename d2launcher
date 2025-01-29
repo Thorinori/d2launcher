@@ -361,9 +361,9 @@ show_settings_menu() {
 }
 
 show_update_manager_menu() {
-    local item_01="Check for Median XL update"
-    local item_02="Check for D2Launcher update"
-    local item_03="Update Tweaks Database"
+    local item_01="Update Tweaks Database"
+    local item_02="Check for Median XL update"
+    local item_03="Check for D2Launcher update"
     local item_04="Force Proton/Wine update"
     local item_05="Force D2Stats update"
     local result
@@ -377,15 +377,15 @@ show_update_manager_menu() {
         return
     fi
     if [ "$result" = "$item_01" ]; then
-        show_gui_update_mxl
+        show_gui_update_tweaks_db
         return
     fi
     if [ "$result" = "$item_02" ]; then
-        show_gui_update_script
+        show_gui_update_mxl
         return
     fi
     if [ "$result" = "$item_03" ]; then
-        show_gui_update_tweaks_db
+        show_gui_update_script
         return
     fi
     if [ "$result" = "$item_04" ]; then
@@ -694,7 +694,7 @@ show_gui_mxl_patches() {
 }
 
 show_gui_update_tweaks_db() {
-    ! zenity_question "<big>D2Launcher Tweaks DB Updater</big>\n\nUpdate and replace local <b>tweaks.db</b>?" && return 1
+    ! zenity_question "<big>D2Launcher Tweaks DB Updater</big>\n\n<b>Upstream:</b>\n${tweaks_url}\n\n<b>Local:</b>\n${SCRIPT_TWEAKS_FILE}\n\n<b>Update</b> and replace local <b>tweaks.db</b>?" && return 1
     if [[ "$tweaks_url" = "http"* ]]; then # Download
         (curl -sLf "$tweaks_url" >"${SCRIPT_TEMP_DIR}/tweaks.db" || rm "${SCRIPT_TEMP_DIR}/tweaks.db") &
         if ! zenity_progress $! "Downloading tweaks.db"; then

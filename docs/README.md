@@ -65,7 +65,7 @@ d2_stats_tray="true"
 update_check="true"
 mxl_update_check="true"
 mxl_update_channel="public"
-mxl_update_exclude=("d2gl.mpq" "glide3x.dll" "cnc-ddraw config.exe" "ddraw.dll")
+mxl_update_exclude=("d2gl.mpq" "glide3x.dll" "ddraw.dll" "cnc-ddraw config.exe")
 gui_width="420"
 gui_height="320"
 tweaks_url="https://my/custom/url/to/tweaks.db"
@@ -90,7 +90,7 @@ Add this array property to exclude files from update
 Best when using tweaks:
 
 ```
-mxl_update_exclude=("d2gl.mpq" "glide3x.dll" "cnc-ddraw config.exe" "ddraw.dll")
+mxl_update_exclude=("d2gl.mpq" "glide3x.dll" "ddraw.dll" "cnc-ddraw config.exe")
 ```
 
 ## Median XL Beta
