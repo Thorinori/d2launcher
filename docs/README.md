@@ -80,7 +80,8 @@ All files are located here: `~/.d2launcher`. Simply copy & paste to another syst
 The logging file is `~/.d2launcher/d2launcher.log` and **is** rotated on every start of d2launcher. This contains only logs from execution of Diablo II.
 
 ## Menu Custom command
-Replace "Diablo II" menu command with `custom_command="/my/custom/cmd"`
+
+Replace "Diablo II" menu command with `custom_command="/my/custom/cmd"` (e.g. to start via Lutris or custom script instead).
 
 ## Exclude files from update patch
 
@@ -271,6 +272,7 @@ Many thanks to these projects:
 - https://github.com/Kron4ek/Wine-Builds/
 - https://github.com/Kyromyr/D2Stats
 - https://github.com/Zahariel1942/D2Stats/
+- https://github.com/azadix/D2Stats
 - https://github.com/SyndromeDayna/diablo-2-median-xl-sigma-loader
 - https://github.com/synthagency/icons-flat-osx
 - http://www.svenswrapper.de

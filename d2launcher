@@ -83,8 +83,8 @@ D2_BIN_DIR="$SCRIPT_BIN_DIR/diablo2"
 
 # Urls
 wine_native_url="https://github.com/Kron4ek/Wine-Builds/releases/download/7.0-5-proton/wine-7.0-5-proton-amd64.tar.xz"
-d2_stats_url="https://github.com/Zahariel1942/D2Stats/releases/latest/download/D2Stats.zip"
-d2_sigma_loader_url="https://github.com/SyndromeDayna/diablo-2-median-xl-sigma-loader/releases/download/3/sigma-loader.exe"
+d2_stats_url="https://github.com/azadix/D2Stats/releases/latest/download/D2Stats.zip"
+d2_sigma_loader_url="https://github.com/SyndromeDayna/diablo-2-median-xl-sigma-loader/releases/latest/download/sigma-loader.exe"
 tweaks_url="https://raw.githubusercontent.com/murkl/d2launcher/refs/heads/main/res/tweaks.db"
 
 # Wine
