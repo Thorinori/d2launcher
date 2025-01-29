@@ -1,5 +1,5 @@
-###!> name: GavinK88/d2gl-mxl-1.0
-###!> version: any
+###!> tweak_name: GavinK88/d2gl-mxl-1.0
+###!> tweak_version: any
 sleep 1.5
 github_author=GavinK88
 github_repo=d2gl-mxl-1.0
@@ -41,8 +41,8 @@ echo ' - Set property: mxl_update_exclude=("d2gl.mpq" "glide3x.dll")'
 echo ' - Open D2GL Settings in Diablo II with: CTRL + o'
 echo ''
 
-###!> name: FunkyFr3sh/cnc-ddraw
-###!> version: latest
+###!> tweak_name: FunkyFr3sh/cnc-ddraw
+###!> tweak_version: latest
 github_author=FunkyFr3sh
 github_repo=cnc-ddraw
 github_version=latest

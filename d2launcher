@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC1090
 
-SCRIPT_VERSION="4.1.2"
+SCRIPT_VERSION="4.1.3"
 
 # /////////////////////////////////////////////////////
 # LOCATE SCRIPT WORKING DIR
@@ -85,7 +85,7 @@ D2_BIN_DIR="$SCRIPT_BIN_DIR/diablo2"
 wine_native_url="https://github.com/Kron4ek/Wine-Builds/releases/download/7.0-5-proton/wine-7.0-5-proton-amd64.tar.xz"
 d2_stats_url="https://github.com/azadix/D2Stats/releases/latest/download/D2Stats.zip"
 d2_sigma_loader_url="https://github.com/SyndromeDayna/diablo-2-median-xl-sigma-loader/releases/latest/download/sigma-loader.exe"
-tweaks_url="https://raw.githubusercontent.com/murkl/d2launcher/refs/heads/main/res/tweaks.db"
+tweaks_upstream="https://raw.githubusercontent.com/murkl/d2launcher/refs/heads/main/res/tweaks.db"
 
 # Wine
 wine_default="$WINE_NATIVE_BIN"
@@ -423,17 +423,17 @@ show_tweaks_menu() {
     #  Parse tweaks file and save in list (line by line)
     # Add empty line at the end
     echo >>"$SCRIPT_TWEAKS_FILE" && while IFS= read -r line; do
-        if [[ $line == "###!> name:"* ]]; then
+        if [[ $line == "###!> tweak_name:"* ]]; then
             # Process previous entry if complete
             if [[ -n $name && -n $version && -n $content ]]; then
                 clean_name=$(print_clean_filename "${name}:${version}")
                 echo "$content" >"${clean_name}.sh"
                 name_version_list+=("$name:$version")
             fi
-            name=${line#"###!> name: "} # Start new entry
+            name=${line#"###!> tweak_name: "} # Start new entry
             unset version content       # Reset for new entry
-        elif [[ $line == "###!> version:"* ]]; then
-            version=${line#"###!> version: "}
+        elif [[ $line == "###!> tweak_version:"* ]]; then
+            version=${line#"###!> tweak_version: "}
         else
             content+="$line"$'\n' # Accumulate content
         fi
@@ -694,17 +694,17 @@ show_gui_mxl_patches() {
 }
 
 show_gui_update_tweaks_db() {
-    ! zenity_question "<big>D2Launcher Tweaks DB Updater</big>\n\n<b>Upstream:</b>\n${tweaks_url}\n\n<b>Local:</b>\n${SCRIPT_TWEAKS_FILE}\n\n<b>Update</b> and replace local <b>tweaks.db</b>?" && return 1
-    if [[ "$tweaks_url" = "http"* ]]; then # Download
-        (curl -sLf "$tweaks_url" >"${SCRIPT_TEMP_DIR}/tweaks.db" || rm "${SCRIPT_TEMP_DIR}/tweaks.db") &
+    ! zenity_question "<big>D2Launcher Tweaks DB Updater</big>\n\n<b>Upstream:</b>\n${tweaks_upstream}\n\n<b>Local:</b>\n${SCRIPT_TWEAKS_FILE}\n\n<b>Update</b> and replace local <b>tweaks.db</b>?" && return 1
+    if [[ "$tweaks_upstream" = "http"* ]]; then # Download
+        (curl -sLf "$tweaks_upstream" >"${SCRIPT_TEMP_DIR}/tweaks.db" || rm "${SCRIPT_TEMP_DIR}/tweaks.db") &
         if ! zenity_progress $! "Downloading tweaks.db"; then
-            zenity_error "Error during download $tweaks_url"
+            zenity_error "Error during download $tweaks_upstream"
             return 1
         fi
-        [ ! -f "${SCRIPT_TEMP_DIR}/tweaks.db" ] && zenity_error "Error downloading ${tweaks_url}" && return 1
+        [ ! -f "${SCRIPT_TEMP_DIR}/tweaks.db" ] && zenity_error "Error downloading ${tweaks_upstream}" && return 1
     else # Or copy if variable is set to local file
-        cp -f "$tweaks_url" "${SCRIPT_TEMP_DIR}/tweaks.db"
-        [ ! -f "${SCRIPT_TEMP_DIR}/tweaks.db" ] && zenity_error "Error copy ${tweaks_url}" && return 1
+        cp -f "$tweaks_upstream" "${SCRIPT_TEMP_DIR}/tweaks.db"
+        [ ! -f "${SCRIPT_TEMP_DIR}/tweaks.db" ] && zenity_error "Error copy ${tweaks_upstream}" && return 1
     fi
 
     if ! [[ "$(sed '/^[[:space:]]*$/d' "${SCRIPT_TEMP_DIR}/tweaks.db" | head -n 1 | awk '{print $1}')" == "###!"* ]]; then

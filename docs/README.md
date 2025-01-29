@@ -68,7 +68,7 @@ mxl_update_channel="public"
 mxl_update_exclude=("d2gl.mpq" "glide3x.dll" "ddraw.dll" "cnc-ddraw config.exe")
 gui_width="420"
 gui_height="320"
-tweaks_url="https://my/custom/url/to/tweaks.db"
+tweaks_upstream="https://my/custom/url/to/tweaks.db"
 ```
 
 ## Backup & Restore
@@ -104,7 +104,7 @@ Change the property `mxl_update_channel` from `public` to `beta`.
 wine_native_url="https://github.com/Kron4ek/Wine-Builds/releases/download/6.3-7-proton/wine-6.3-7-proton-amd64.tar.xz"
 d2_stats_url="https://github.com/Zahariel1942/D2Stats/releases/latest/download/D2Stats.zip"
 d2_sigma_loader_url="https://github.com/SyndromeDayna/diablo-2-median-xl-sigma-loader/releases/download/3/sigma-loader.exe"
-tweaks_url="https://raw.githubusercontent.com/murkl/d2launcher/refs/heads/main/res/tweaks.db"
+tweaks_upstream="https://raw.githubusercontent.com/murkl/d2launcher/refs/heads/main/res/tweaks.db"
 ```
 
 **Note:** If you change the URLs, you have to force the regarding update/install: `Update Manger` > `Force Proton Update`/`Force D2Stats Update`
@@ -183,11 +183,11 @@ Open `Tweaks` in the main menu and select the desired tweak script that you want
 
 ### Update Tweaks Database
 
-To update this shown tweak list, goto `Update Manager` > `Update Tweaks Database`. The file set in the `tweaks_url` property will be downloaded to `~/.d2launcher/tweaks.db` (or copied if `tweaks_url` is set to a local file).
+To update this shown tweak list, goto `Update Manager` > `Update Tweaks Database`. The file set in the `tweaks_upstream` property will be downloaded to `~/.d2launcher/tweaks.db` (or copied if `tweaks_upstream` is set to a local file).
 
 ### Tweaks Database Syntax
 
-Separated by the two header lines `###!> name: ...` and `###!> version ...` (please keep this order), all tweak scripts are saved in one file.
+Separated by the two header lines `###!> tweak_name: ...` and `###!> tweak_version ...` (please keep this order), all tweak scripts are saved in one file.
 
 The working directory is a generated temporary directory and is deleted after termination. You have access to the variables from `d2launcher.conf` within the tweaks script.
 
@@ -196,17 +196,17 @@ The working directory is a generated temporary directory and is deleted after te
 <sub><b>Example `tweaks.db`:</b></sub>
 
 - Create a new `~/tweaks.db`
-- Set `tweaks_url="~/tweaks.db"`
+- Set `tweaks_upstream="~/tweaks.db"`
 
-**Note:** The `tweaks.db` file can be saved in any location. It must then be adapted accordingly in the `tweaks_url`.
+**Note:** The `tweaks.db` file can be saved in any location. It must then be adapted accordingly in the `tweaks_upstream`.
 
 ```
-###!> name: my_first_tweak_script
-###!> version: 1.0.0
+###!> tweak_name: my_first_tweak_script
+###!> tweak_version: 1.0.0
 echo "You can use bash code to pimp your Diablo II here..."
 
-###!> name: my_second_tweak_script
-###!> version: latest
+###!> tweak_name: my_second_tweak_script
+###!> tweak_version: latest
 echo "Do another plugin stuff..."
 ```
 
@@ -214,7 +214,7 @@ echo "Do another plugin stuff..."
 
 ### Share your own Tweaks Database
 
-You need to share your URL to your `tweaks.db` and set as `tweaks_url` in settings. Remember to update the tweaks database to create new local `~/.d2launcher/tweaks.db` from `tweaks_url`.
+You need to share your URL to your `tweaks.db` and set as `tweaks_upstream` in settings. Remember to update the tweaks database to create new local `~/.d2launcher/tweaks.db` from `tweaks_upstream`.
 
 **Note:** Feel free to open a PR and merge your tweaks into d2launcher as a PR.
 
