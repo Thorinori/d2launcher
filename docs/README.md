@@ -65,7 +65,7 @@ d2_stats_tray="true"
 update_check="true"
 mxl_update_check="true"
 mxl_update_channel="public"
-mxl_update_exclude=("cnc-ddraw config.exe" "ddraw.dll")
+mxl_update_exclude=("d2gl.mpq" "glide3x.dll" "cnc-ddraw config.exe" "ddraw.dll")
 gui_width="420"
 gui_height="320"
 tweaks_url="https://my/custom/url/to/tweaks.db"
@@ -79,10 +79,19 @@ All files are located here: `~/.d2launcher`. Simply copy & paste to another syst
 
 The logging file is `~/.d2launcher/d2launcher.log` and **is** rotated on every start of d2launcher. This contains only logs from execution of Diablo II.
 
+## Menu Custom command
+Replace "Diablo II" menu command with `custom_command="/my/custom/cmd"`
+
 ## Exclude files from update patch
 
 Add this array property to exclude files from update
 `mxl_update_exclude=("file1" "file2")`
+
+Best when using tweaks:
+
+```
+mxl_update_exclude=("d2gl.mpq" "glide3x.dll" "cnc-ddraw config.exe" "ddraw.dll")
+```
 
 ## Median XL Beta
 

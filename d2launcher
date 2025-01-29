@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC1090
 
-SCRIPT_VERSION="4.1.1"
+SCRIPT_VERSION="4.1.2"
 
 # /////////////////////////////////////////////////////
 # LOCATE SCRIPT WORKING DIR
@@ -36,6 +36,7 @@ SCRIPT_RES_DIR="$WORKING_DIR/res"
 SCRIPT_HOME_DIR="$HOME/.d2launcher"
 SCRIPT_BIN_DIR="$SCRIPT_HOME_DIR/bin"
 SCRIPT_BACKUP_DIR="$SCRIPT_HOME_DIR/backup"
+SCRIPT_TWEAKS_DIR="$SCRIPT_HOME_DIR/tweaks"
 
 SCRIPT_CONFIG_FILE="$SCRIPT_HOME_DIR/d2launcher.conf"
 SCRIPT_TWEAKS_FILE="$SCRIPT_HOME_DIR/tweaks.db"
@@ -158,6 +159,7 @@ main() {
     mkdir -p "$SCRIPT_BIN_DIR" || { echo "Error creating ${SCRIPT_BIN_DIR}" && exit 1; }
     mkdir -p "$SCRIPT_BACKUP_DIR" || { echo "Error creating ${SCRIPT_BACKUP_DIR}" && exit 1; }
     mkdir -p "$SCRIPT_TEMP_DIR" || { echo "Error creating ${SCRIPT_TEMP_DIR}" && exit 1; }
+    mkdir -p "$SCRIPT_TWEAKS_DIR" || { echo "Error creating ${SCRIPT_TWEAKS_DIR}" && exit 1; }
 
     # Rotate logfile
     [ -f "$SCRIPT_LOG_FILE" ] && mv -f "$SCRIPT_LOG_FILE" "${SCRIPT_BACKUP_DIR}/d2launcher.log.old"
@@ -398,6 +400,8 @@ show_update_manager_menu() {
 
 show_tweaks_menu() {
 
+    check_d2_dir || return 1
+
     # Download tweaks db from URL (if not exists)
     [ ! -f "$SCRIPT_TWEAKS_FILE" ] && ! show_gui_update_tweaks_db && return 1
 
@@ -462,7 +466,7 @@ show_tweaks_menu() {
 
     # View source?
     if zenity_question "View Sourcecode from <b>${result}</b> Script?"; then
-        zenity --text-info --width="800" --height="600" --title="Source: ${result}" --ok-label="Continue" --cancel-label="Cancel" --font="monospace" --filename="$tweak_file" || return 1
+        zenity --text-info --width="1920" --height="1080" --title="Source: ${result}" --ok-label="Continue" --cancel-label="Cancel" --font="monospace" --filename="$tweak_file" || return 1
     fi
 
     # Install tweak?
@@ -472,7 +476,7 @@ show_tweaks_menu() {
 
     # Run tweak script in temp as working dir
     (
-        echo "// Install ${result}"
+        echo "// ${result}"
         chmod +x "${tweak_file}"
         bash -c "set -a && source ${SCRIPT_CONFIG_FILE} && ${tweak_file}" || echo $? >"${SCRIPT_TEMP_DIR}/tweaks/error"
     ) 2>&1 | tee -a "$tweak_log" &
@@ -481,11 +485,11 @@ show_tweaks_menu() {
         return 1
     fi
     if [ -f "${SCRIPT_TEMP_DIR}/tweaks/error" ]; then
-        echo ":: Error" >>"$tweak_log"
+        echo ":: ERROR Tweak installation failed" >>"$tweak_log"
     else
-        echo ":: Success" >>"$tweak_log"
+        echo ":: Tweak successfully installed" >>"$tweak_log"
     fi
-    zenity --text-info --width="800" --height="600" --title="Tweak Log" --ok-label="Ok" --cancel-label="Close" --font="monospace" --filename="$tweak_log"
+    zenity --text-info --width="1080" --height="720" --title="Tweak Log" --ok-label="Ok" --cancel-label="Close" --font="monospace" --filename="$tweak_log"
     return 0
 }
 # /////////////////////////////////////////////////////
@@ -1004,6 +1008,10 @@ exec_wine_exe() {
 }
 
 exec_diablo2() {
+    if [ -n "$custom_command" ]; then
+        bash -c "$custom_command"
+        exit $?
+    fi
     check_d2_dir || return 1
     check_wine_install || return 1
     check_patch_installation || return 1
